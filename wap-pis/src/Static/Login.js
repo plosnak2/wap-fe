@@ -37,10 +37,10 @@ const Login =() => {
     {(formik) => {
       const { errors, touched, isValid, dirty } = formik;
       return (
-      <div className="rel">
-      <div className="bg-image"></div>
-      <div className="abs">
-        <section class="vh-100 gradient-custom">
+      <div className="backgroundImageCVR">
+      <div className="background-image"></div>
+
+        <section class="vh-100 gradient-custom"  className="rel">
           <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
               <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -81,7 +81,7 @@ const Login =() => {
                     </Form>
 
                     <div>
-                      <p class="mb-0">Nemáte ešte účet? <a href="#!" class="text-white-50 fw-bold">Zaregistrovať sa</a>
+                      <p class="mb-0">Nemáte ešte účet? <p className="clickable" onClick={() => navigate("/register", { replace: true })} class="text-white-50 fw-bold" >Zaregistrovať sa</p>
                       </p>
                     </div>
 
@@ -91,7 +91,6 @@ const Login =() => {
             </div>
           </div>
         </section>
-      </div>
       </div>
 
       )}}

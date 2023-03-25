@@ -3,6 +3,7 @@ import Main from './Pages/MainPage';
 import Unauthorized from './Pages/Unauthorized';
 import ProtectedRoute from './Context/Protected';
 import LoginPage from './Pages/LoginPage';
+import RegisterPage from './Pages/RegisterPage';
 
 
 // https://stackoverflow.com/questions/70743498/role-based-react-router
@@ -19,7 +20,7 @@ function App() {
           </Route>
           
           
-          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </Router>
     
