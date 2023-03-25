@@ -1,10 +1,9 @@
 import {Routes, Route, BrowserRouter as Router} from 'react-router-dom'
 import Main from './Pages/MainPage';
 import Unauthorized from './Pages/Unauthorized';
-import ProtectedRoute from './Context/Protected';
+import ProtectedLogin from './Context/ProtectedLogin';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
-
 
 // https://stackoverflow.com/questions/70743498/role-based-react-router
 function App() {
@@ -15,12 +14,13 @@ function App() {
 
           <Route exact path="/" element={<Main />} />
           
-          <Route exact path="/login" element={<ProtectedRoute />}>
+          <Route exact path="/login" element={<ProtectedLogin />}>
             <Route exact path="/login" element={<LoginPage />} />
           </Route>
           
-          
-          <Route path="/register" element={<RegisterPage />} />
+          <Route exact path="/register" element={<ProtectedLogin />}>
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
         </Routes>
       </Router>
     
