@@ -32,3 +32,13 @@ a:hover{
   top:0;
   width: 100%;
 }
+
+.input-error {
+  border-color: red;
+}
+
+.error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
