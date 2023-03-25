@@ -81,7 +81,7 @@ const Login =() => {
                     </Form>
 
                     <div>
-                      <p class="mb-0">Nemáte ešte účet? <p className="clickable" onClick={() => navigate("/register", { replace: true })} class="text-white-50 fw-bold" >Zaregistrovať sa</p>
+                      <p class="mb-0">Nemáte ešte účet? <p className="clickable" onClick={() => navigate("/register", { replace: true })}  >Zaregistrovať sa</p>
                       </p>
                     </div>
 
