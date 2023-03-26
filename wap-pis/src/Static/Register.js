@@ -53,7 +53,7 @@ const Register =() => {
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <input class="form-control form-control-lg" onClick={onClick} ref={ref} value={format(startDate, "dd-MM-yyyy")}/>
+        <input class="form-control form-control-lg" onClick={onClick} ref={ref} value={format(new Date(startDate), "dd-MM-yyyy")}/>
       ));
     
     // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API

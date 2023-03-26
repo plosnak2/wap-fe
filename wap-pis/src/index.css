@@ -187,6 +187,100 @@ a:hover {
   
 }
 
+.reservation {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #212529;
+  padding: 20px;
+  min-height: 89vh;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.reservation img {
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+.reservation p {
+  text-align: left;
+  margin-left: 20%;
+  padding-right: 20%;
+  font-weight: bold;
+}
+
+.reservation Button {
+  width: 60%;
+  
+}
+
+.service {
+  display: flex;
+  margin-top: 30 px;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  border-width: 2px;
+  border-color: white;
+  background-color: white;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 50px;
+  color: black;
+}
+
+.service p {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.service .roomImage {
+  width:50%;
+
+}
+
+.service .roomImage img {
+  width: 80%;
+}
+
+@media only screen and (max-width: 1300px) {
+  .service{
+    display: inline-block;
+    left: 0%;
+    transform: translateX(0%);
+  }
+  
+  .service .roomImage {
+    width:100%;
+  
+  }
+
+  .service .roomImage img {
+    width: 90%;
+  }
+
+  .service .description {
+    width: 100%
+  }
+
+  .reservation .description p {
+    text-align: left;
+    margin-left: 10%;
+    padding-right: 10%;
+    font-weight: bold;
+  }
+  
+
+}
+
 @media only screen and (max-width: 1000px) {
     .roomImage {
     width:100%;
@@ -201,6 +295,20 @@ a:hover {
     display: inline-block;
   }
 
+  .reservation img {
+    width: 80%;
+  }
+
+  .reservation p {
+    text-align: left;
+    margin-left: 10%;
+    padding-right: 10%;
+    font-weight: bold;
+  }
+  
+  .reservation Button {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 780px) {

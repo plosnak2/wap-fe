@@ -25,7 +25,6 @@ function NavigationBar() {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
-              <Nav.Link href="#features">Služby</Nav.Link>
               {
                 role === "customer" ?
                 <Nav.Link href="#features">Moje rezervácie</Nav.Link> :

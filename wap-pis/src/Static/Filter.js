@@ -46,7 +46,7 @@ function Filter() {
 
   useEffect(() => {
     filtering();
-  }, [startDate, endDate, value]); // Only re-run the effect if count changes
+  }, [startDate, endDate, value]);
 
   function filtering(){
     //setDisplayedRooms([]);
@@ -128,12 +128,13 @@ function Filter() {
                   <p>Číslo izby: {room.roomNumber}, poschodie: {room.floor}</p>
                   <p>Popis: {room.description}</p>
                   <p>Cena za noc: {room.priceForNight}€</p>
+                  <p>Počet nocí: {Math.round((endDate.setHours(0,0,0,0,) - startDate.setHours(0,0,0,0))/86400000)}</p>
                   {
                     role == null 
                     ?
                     <Button variant="success" onClick={() => navigate('/login')}>Pre rezerváciu je potrebné sa prihlásiť</Button> 
                     :
-                    <Button variant="success" >Rezervovať - &nbsp;
+                    <Button variant="success" onClick={() => navigate('/createreservation', {state: {room: room, startDate: startDate, endDate: endDate}})}>Rezervovať - &nbsp;
                     {Math.round((endDate.setHours(0,0,0,0,) - startDate.setHours(0,0,0,0))/86400000) * room.priceForNight}
                     €
                     </Button>
