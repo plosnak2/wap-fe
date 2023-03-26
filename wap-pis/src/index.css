@@ -146,6 +146,18 @@ a:hover {
   margin-bottom: 50px;
 }
 
+.sorry {
+  display: inline-block;
+  width: 100%;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 .roomImage {
   width: 50%;
 

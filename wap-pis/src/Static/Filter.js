@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import { FaCalendar, FaBed  } from 'react-icons/fa';
+import { BiSad } from 'react-icons/bi';
+import {Navigate, useNavigate } from 'react-router-dom'
 
 const json = [
   {
@@ -34,6 +36,8 @@ function Filter() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now() + ( 3600 * 1000 * 24)));
   const [value, setValue] = useState(1);
+  const [role, setRole] = useState(localStorage.getItem("role")?localStorage.getItem("role"):null);
+  const navigate = useNavigate();
   const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
       <Button className="button" onClick={onClick} ref={ref}>
         {value}
@@ -106,6 +110,13 @@ function Filter() {
             </div>
         </div>
         {
+          displayedRooms.length === 0
+          ?
+          <div className='sorry'>
+            <BiSad  size={150}/>
+            <h3>V zadanom období niesú dostupné žiadne izby.</h3>
+          </div>
+          :
           displayedRooms.map((room,index) => {
             return(
               <div class="room">
@@ -116,13 +127,23 @@ function Filter() {
                   <h3>Počet lôžok: {room.capacity}</h3>
                   <p>Číslo izby: {room.roomNumber}, poschodie: {room.floor}</p>
                   <p>Popis: {room.description}</p>
-                  <p>Cena za noc: {room.priceForNight}</p>
-                  <Button variant="success" >Rezervovať - 450€</Button>
+                  <p>Cena za noc: {room.priceForNight}€</p>
+                  {
+                    role == null 
+                    ?
+                    <Button variant="success" onClick={() => navigate('/login')}>Pre rezerváciu je potrebné sa prihlásiť</Button> 
+                    :
+                    <Button variant="success" >Rezervovať - &nbsp;
+                    {Math.round((endDate.setHours(0,0,0,0,) - startDate.setHours(0,0,0,0))/86400000) * room.priceForNight}
+                    €
+                    </Button>
+                  }
                 </div>
               </div>
             )
           })
         }
+        
     </div>
   );
 }
