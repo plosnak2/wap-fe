@@ -30,6 +30,11 @@ function NavigationBar() {
                 <Nav.Link href="#features">Moje rezervácie</Nav.Link> :
                 null
               }
+              {
+                role === "customer" ?
+                <Nav.Link> <Link to="/editprofile">Upraviť údaje </Link></Nav.Link> :
+                null
+              }
             </Nav>
             <Nav>
             {

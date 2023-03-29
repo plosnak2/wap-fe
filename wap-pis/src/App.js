@@ -5,6 +5,8 @@ import ProtectedLogin from './Context/ProtectedLogin';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
 import CreateReservation from './Pages/CreateReservation';
+import EditProfile from './Pages/EditProfile';
+import ProtectedCustomer from './Context/ProtectedCustomer';
 
 // https://stackoverflow.com/questions/70743498/role-based-react-router
 function App() {
@@ -16,6 +18,10 @@ function App() {
           <Route exact path="/" element={<Main />} />
           <Route exact path="/createreservation" element={<CreateReservation />} />
           
+          <Route exact path="/editprofile" element={<ProtectedCustomer />}>
+            <Route exact path="/editprofile" element={<EditProfile />} />
+          </Route>
+
           <Route exact path="/login" element={<ProtectedLogin />}>
             <Route exact path="/login" element={<LoginPage />} />
           </Route>
