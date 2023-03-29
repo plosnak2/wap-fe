@@ -256,6 +256,19 @@ a:hover {
   margin-top: 100px;
 }
 
+.payment-method {
+  display: flex;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.payment-method-block {
+  width: 50%;
+}
+
 @media only screen and (max-width: 1300px) {
   .service{
     display: inline-block;
@@ -326,6 +339,10 @@ a:hover {
   }
 
   .izby {
+    width: 100%;
+  }
+
+  .payment-method-block {
     width: 100%;
   }
 

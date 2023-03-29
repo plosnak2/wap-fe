@@ -7,6 +7,8 @@ import { format } from 'date-fns'
 import Moment from 'moment';
 import Button from 'react-bootstrap/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { RadioGroup, Radio, FormControlLabel } from '@mui/material';
+import { BsBank, BsCash} from 'react-icons/bs';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -29,6 +31,7 @@ const json = [
 function Reserve(props) {
     const [services, setServices] = useState([])
     const [price, setPrice] = useState(Math.round((props.endDate.setHours(0,0,0,0,) - props.startDate.setHours(0,0,0,0))/86400000) * props.room.priceForNight)
+    const [payment, setPayment] = useState(1);
     useEffect(() => {
         let tempArr = []
         json.map((service, index) => {
@@ -86,6 +89,21 @@ function Reserve(props) {
                     )
                 })
             }
+            <h1>Spôsob platby</h1>
+            <RadioGroup
+                row
+                className='payment-method'
+                value={payment}
+                name="radio-buttons-group"
+                onChange={(e)=> setPayment(e.target.value)}   
+            >   
+                <div className="payment-method-block">
+                    <FormControlLabel value={1} control={<Radio />} label="Prevodom" /> <BsBank size={30}/>
+                </div>
+                <div className="payment-method-block">
+                    <FormControlLabel value={2} control={<Radio />} label="Hotovosť" /> <BsCash size={30}/>
+                </div>
+            </RadioGroup>
             <Button variant="success">Rezervovať - {price}€</Button> 
         </div>
       </div>
