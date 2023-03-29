@@ -27,7 +27,7 @@ function NavigationBar() {
               <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
               {
                 role === "customer" ?
-                <Nav.Link href="#features">Moje rezervácie</Nav.Link> :
+                <Nav.Link > <Link to="/myreservations"> Moje rezervácie </Link></Nav.Link> :
                 null
               }
               {

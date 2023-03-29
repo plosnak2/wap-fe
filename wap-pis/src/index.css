@@ -36,6 +36,7 @@ a:hover {
 .backgroundImageCVR {
   position: relative;
   padding: 15px;
+  min-height: 94vh;
 }
 .background-image {
   position: absolute;
@@ -269,6 +270,98 @@ a:hover {
   width: 50%;
 }
 
+.customers-reservations {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #212529;
+  padding: 20px;
+  min-height: 89vh;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.customer-reservation {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.customer-reservation-image {
+  width: 20%;
+  float: left;
+}
+
+.customer-reservation-imgroom {
+  width: 100%
+}
+
+.customer-reservation-info {
+  width: 40%;
+  text-align: left;
+  color: #212529;
+  padding-left: 20px;
+  font-weight: bold;
+  float: left;
+}
+
+.customer-reservation-info p {
+  margin-bottom: 0;
+}
+
+.button-reservation {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.collapse-reservations {
+  width: 100%;
+  color: #212529;
+  background-color: white;
+}
+
+.wrapper-reservations {
+  display: inline-block;
+  margin-top: 30px;
+  width: 100%;
+  border-width: 2px;
+  border-color: white;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: white;
+}
+
+.reservation-service {
+  margin-top: 30px;
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.reservation-service-image {
+  width: 20%;
+  float: left;
+}
+
+.reservation-service-imgroom {
+  width: 100%
+}
+
+.reservation-service-info {
+  width: 80%;
+  text-align: left;
+  color: #212529;
+  padding-left: 20px;
+  font-weight: bold;
+  float: left;
+}
+
+
 @media only screen and (max-width: 1300px) {
   .service{
     display: inline-block;
@@ -329,6 +422,20 @@ a:hover {
   }
 }
 
+@media only screen and (max-width: 900px) {
+
+  .customer-reservation-image {
+    width: 100%;
+  
+  }
+
+  .customer-reservation-info {
+    width: 50%;
+    margin-top: 20px;
+  }
+
+}
+
 @media only screen and (max-width: 780px) {
   .prichod {
     width: 100%;
@@ -346,4 +453,15 @@ a:hover {
     width: 100%;
   }
 
+  .reservation-service-image {
+    width: 0%;
+  }
+
+  .reservation-service-info {
+    width: 100%;
+  }
+
+  .customer-reservation-info {
+    width: 100%;
+  }
 }
