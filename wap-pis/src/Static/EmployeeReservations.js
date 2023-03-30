@@ -12,6 +12,7 @@ import { BsCheckSquareFill, BsFillPersonFill, BsXSquareFill } from 'react-icons/
 import {Navigate, useNavigate } from 'react-router-dom'
 import Checkbox from '@mui/material/Checkbox';
 import Moment from 'moment';
+import Collapse from 'react-bootstrap/Collapse';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -26,15 +27,10 @@ const json = [
       "paymentMethod": "Bank",
       "services": [
         {
-          "serviceName": "Wellness",
+          "serviceName": "Sauna",
           "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
           "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        },
-        {
-            "serviceName": "Wellness",
-            "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-            "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-          }
+        }
       ],
       "room": {
         "roomNumber": 212,
@@ -59,12 +55,7 @@ const json = [
           "serviceName": "Wellness",
           "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
           "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        },
-        {
-            "serviceName": "Wellness",
-            "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-            "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-          }
+        }
       ],
       "room": {
         "roomNumber": 212,
@@ -79,6 +70,7 @@ const json = [
   ]
 
 function EmployeeReservations() {
+  const [openServices, setOpenServices] = useState([]);
   const [displayedReservations, setDisplayedReservations] = useState([])
   const [resId, setResId] = useState('')
   const [personName, setPersonName] = useState('')
@@ -93,6 +85,14 @@ function EmployeeReservations() {
     ));
 
   useEffect(() => {
+    let openServicesTmp = []
+        json.map((service, index) => {
+            let item = {
+                open: false
+            }
+            openServicesTmp.push(item)
+        })
+        setOpenServices(openServicesTmp)
     filtering();
   }, [checkCreated, checkPaid, checkDone, resId, personName]);
 
@@ -121,6 +121,13 @@ function EmployeeReservations() {
         }
     })
     setDisplayedReservations(tmpArray)
+  }
+
+  function handleChange(index) {
+      let tmpArr = [...openServices]
+      tmpArr[index].open = !tmpArr[index].open
+      setOpenServices(tmpArr)
+      console.log(openServices)
   }
 
   return (
@@ -188,8 +195,25 @@ function EmployeeReservations() {
                                 reservation.status !== 'Done' ?
                                 <Button variant="success">Ubytovať hostí</Button> :
                                 null
-                            } 
+                            }
+                            <Button variant="dark" onClick={() => handleChange(index)}>Zobraziť služby</Button>
                         </div>
+                        {
+                          reservation.services.map((service) => {
+                              return (
+                                  <Collapse in={openServices[index].open}>
+                                  <div id="example-collapse-text">
+                                      <div className="reservation-service">
+                                          <div className="reservation-service-info">
+                                          <h3>{service.serviceName}</h3>
+                                          <p>{service.description}</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </Collapse>
+                              )     
+                          })
+                      }
                     </div>
                 )
             })

@@ -416,7 +416,9 @@ a:hover {
 
 .reservation-employee-finish Button {
   width: 100%;
+  margin-bottom: 10px;
 }
+
 
 @media only screen and (max-width: 1300px) {
   .service{
