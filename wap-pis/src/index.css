@@ -419,6 +419,56 @@ a:hover {
   margin-bottom: 10px;
 }
 
+.checkin-background {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  width: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #212529;
+  padding: 20px;
+  min-height: 89vh;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.custom-input {
+  width: 50%;
+  margin: auto;
+}
+
+.guest {
+  width: 80%;
+  margin:auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  color: #212529;
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.guest-left {
+  width: 100%;
+  float: left;
+}
+
+.guest-half {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+.guest-button {
+  width: 20%;
+  margin-top: 20px;
+}
+
+
 
 @media only screen and (max-width: 1300px) {
   .service{
@@ -451,6 +501,10 @@ a:hover {
 }
 
 @media only screen and (max-width: 1000px) {
+  .guest-half {
+    width: 100%;
+  }
+
   .reservation-employee-image {
     width: 0%;
   }
@@ -544,5 +598,13 @@ a:hover {
   
   .reservation-employee-finish {
     width: 100%;
+  }
+
+  .checkin-background {
+    width: 100%;
+  }
+
+  .guest-button {
+    width: 50%;
   }
 }

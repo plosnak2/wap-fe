@@ -11,6 +11,7 @@ import MyReservations from './Pages/MyReservations';
 import ReservationsList from './Pages/Employee/ReservationsList';
 import ProtectedEmployeeAdmin from './Context/ProtectedEmployee';
 import Protected from './Context/Protected';
+import CheckinGuests from './Pages/Employee/CheckinGuests';
 
 // https://stackoverflow.com/questions/70743498/role-based-react-router
 function App() {
@@ -23,6 +24,8 @@ function App() {
             <Route exact path="/" element={<Main />} />
           </Route>
           
+          <Route exact path="/checkinguests" element={<CheckinGuests />} />
+
           <Route exact path="/reservationslist" element={<ProtectedEmployeeAdmin />}>
             <Route exact path="/reservationslist" element={<ReservationsList />} />
           </Route>

@@ -43,13 +43,13 @@ const json = [
       }
     },
     {
-      "reservationID": "15038",
+      "reservationID": "15039",
       "arrivalDate": "2023-03-29T13:33:19.317Z",
       "departureDate": "2023-03-30T13:33:19.317Z",
-      "price": 1000,
+      "price": 1500,
       "status": "Created",
       "createdAt": "2023-03-29T13:33:19.317Z",
-      "paymentMethod": "Bank",
+      "paymentMethod": "Cash",
       "services": [
         {
           "serviceName": "Wellness",
@@ -58,8 +58,8 @@ const json = [
         }
       ],
       "room": {
-        "roomNumber": 212,
-        "capacity": 2,
+        "roomNumber": 213,
+        "capacity": 4,
         "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg"
       },
       "customer": {
@@ -130,6 +130,10 @@ function EmployeeReservations() {
       console.log(openServices)
   }
 
+  function checkinGuests(index){
+    navigate('/checkinguests', {state: {reservation: displayedReservations[index]}})
+  }
+
   return (
     <div class="container">
         <div className='filter'>
@@ -170,6 +174,7 @@ function EmployeeReservations() {
                             <p>Začiatok pobytu: {Moment(new Date(reservation.arrivalDate)).format('DD.MM.YYYY')}</p>
                             <p>Koniec pobytu: {Moment(new Date(reservation.departureDate)).format('DD.MM.YYYY')}</p>
                             <p>Počet nocí: {Math.round((new Date(reservation.departureDate).setHours(0,0,0,0,) - new Date(reservation.arrivalDate).setHours(0,0,0,0,))/86400000)}</p>
+                            <p>Číslo izby: {reservation.room.roomNumber}</p>
                         </div>
                         <div className='reservation-employee-info'>
                             <h3>Meno osoby: {reservation.customer.customerFirstName} {reservation.customer.customerLastName}</h3>
@@ -193,7 +198,7 @@ function EmployeeReservations() {
                             }
                             {
                                 reservation.status !== 'Done' ?
-                                <Button variant="success">Ubytovať hostí</Button> :
+                                <Button variant="success" onClick={() => checkinGuests(index)}>Ubytovať hostí</Button> :
                                 null
                             }
                             <Button variant="dark" onClick={() => handleChange(index)}>Zobraziť služby</Button>
