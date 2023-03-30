@@ -361,6 +361,62 @@ a:hover {
   float: left;
 }
 
+.check {
+  padding: 0 !important;
+  padding-right: 5px !important;
+}
+
+.input-reserve {
+  width: 70%;
+  margin: auto;
+}
+
+.reservation-employee {
+  margin-top: 30px;
+  content: "";
+  display: table;
+  clear: both;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.reservation-employee-image {
+  width: 15%;
+  float: left;
+}
+
+.reservation-employee-imgroom {
+  width: 100%
+}
+
+.reservation-employee-info {
+  width: 30%;
+  text-align: left;
+  padding-left: 20px;
+  font-weight: bold;
+  float: left;
+}
+
+.reservation-employee-finish {
+  width: 25%;
+  text-align: left;
+  padding-left: 20px;
+  font-weight: bold;
+  float: left;
+}
+
+.reservation-employee-info p {
+  margin-bottom: 1px;
+}
+
+.reservation-employee-finish Button {
+  width: 100%;
+}
 
 @media only screen and (max-width: 1300px) {
   .service{
@@ -393,6 +449,18 @@ a:hover {
 }
 
 @media only screen and (max-width: 1000px) {
+  .reservation-employee-image {
+    width: 0%;
+  }
+
+  .reservation-employee-info {
+    width: 33%;
+  }
+  
+  .reservation-employee-finish {
+    width: 33%;
+  }
+
     .roomImage {
     width:100%;
   
@@ -462,6 +530,17 @@ a:hover {
   }
 
   .customer-reservation-info {
+    width: 100%;
+  }
+}
+
+
+@media only screen and (max-width: 780px) {
+  .reservation-employee-info {
+    width: 50%;
+  }
+  
+  .reservation-employee-finish {
     width: 100%;
   }
 }

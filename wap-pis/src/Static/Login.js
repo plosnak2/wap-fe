@@ -22,7 +22,7 @@ const Login =() => {
     // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
     function login(values){
       localStorage.setItem("email", values.email);
-      localStorage.setItem("role", "customer");
+      localStorage.setItem("role", "employee");
       navigate("/", { replace: true });
     }
 

@@ -8,6 +8,9 @@ import CreateReservation from './Pages/CreateReservation';
 import EditProfile from './Pages/EditProfile';
 import ProtectedCustomer from './Context/ProtectedCustomer';
 import MyReservations from './Pages/MyReservations';
+import ReservationsList from './Pages/Employee/ReservationsList';
+import ProtectedEmployeeAdmin from './Context/ProtectedEmployee';
+import Protected from './Context/Protected';
 
 // https://stackoverflow.com/questions/70743498/role-based-react-router
 function App() {
@@ -16,8 +19,17 @@ function App() {
       <Router>
         <Routes>
           
-          <Route exact path="/" element={<Main />} />
-          <Route exact path="/createreservation" element={<CreateReservation />} />
+          <Route exact path="/" element={<Protected />}>
+            <Route exact path="/" element={<Main />} />
+          </Route>
+          
+          <Route exact path="/reservationslist" element={<ProtectedEmployeeAdmin />}>
+            <Route exact path="/reservationslist" element={<ReservationsList />} />
+          </Route>
+
+          <Route exact path="/createreservation" element={<ProtectedCustomer />}>
+            <Route exact path="/createreservation" element={<CreateReservation />} />
+          </Route>
           
           <Route exact path="/editprofile" element={<ProtectedCustomer />}>
             <Route exact path="/editprofile" element={<EditProfile />} />

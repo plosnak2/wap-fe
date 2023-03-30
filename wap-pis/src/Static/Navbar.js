@@ -23,19 +23,25 @@ function NavigationBar() {
             <Navbar.Brand><Link to="/"> <a>Royal Palms Hotel</a> </Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
+            
+              
               {
                 role === "customer" ?
-                <Nav.Link > <Link to="/myreservations"> Moje rezervácie </Link></Nav.Link> :
+                <Nav className="me-auto">
+                <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
+                <Nav.Link > <Link to="/myreservations"> Moje rezervácie </Link></Nav.Link>
+                <Nav.Link> <Link to="/editprofile">Upraviť údaje </Link></Nav.Link>
+                </Nav> : role === "employee" ?
+                <Nav className="me-auto">
+                <Nav.Link> <Link to="/reservationslist"> <a>Rezervácie</a> </Link> </Nav.Link>
+                </Nav> : role === null ?
+                <Nav className="me-auto">
+                <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
+                </Nav> :
                 null
               }
-              {
-                role === "customer" ?
-                <Nav.Link> <Link to="/editprofile">Upraviť údaje </Link></Nav.Link> :
-                null
-              }
-            </Nav>
+      
+            
             <Nav>
             {
                 role == null ?
