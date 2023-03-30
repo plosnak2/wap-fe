@@ -24,7 +24,9 @@ function App() {
             <Route exact path="/" element={<Main />} />
           </Route>
           
-          <Route exact path="/checkinguests" element={<CheckinGuests />} />
+          <Route exact path="/checkinguests" element={<ProtectedEmployeeAdmin />}>
+            <Route exact path="/checkinguests" element={<CheckinGuests />} />
+          </Route>
 
           <Route exact path="/reservationslist" element={<ProtectedEmployeeAdmin />}>
             <Route exact path="/reservationslist" element={<ReservationsList />} />
