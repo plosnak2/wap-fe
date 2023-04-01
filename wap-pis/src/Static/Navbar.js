@@ -28,12 +28,13 @@ function NavigationBar() {
               {
                 role === "customer" ?
                 <Nav className="me-auto">
-                <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
-                <Nav.Link > <Link to="/myreservations"> Moje rezervácie </Link></Nav.Link>
-                <Nav.Link> <Link to="/editprofile">Upraviť údaje </Link></Nav.Link>
+                  <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
+                  <Nav.Link > <Link to="/myreservations"> Moje rezervácie </Link></Nav.Link>
+                  <Nav.Link> <Link to="/editprofile">Upraviť údaje </Link></Nav.Link>
                 </Nav> : role === "employee" ?
                 <Nav className="me-auto">
-                <Nav.Link> <Link to="/reservationslist"> <a>Rezervácie</a> </Link> </Nav.Link>
+                  <Nav.Link> <Link to="/reservationslist"> <a>Rezervácie</a> </Link> </Nav.Link>
+                  <Nav.Link> <Link to="/guests"> <a>Hostia</a> </Link> </Nav.Link>
                 </Nav> : role === null ?
                 <Nav className="me-auto">
                 <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
