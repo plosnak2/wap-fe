@@ -39,6 +39,12 @@ function NavigationBar() {
                 </Nav> : role === null ?
                 <Nav className="me-auto">
                 <Nav.Link> <Link to="/"> <a>Prehľad Izieb</a> </Link> </Nav.Link>
+                </Nav> : role === "admin" ?
+                <Nav className="me-auto">
+                  <Nav.Link> <Link to="/reservationslist"> <a>Rezervácie</a> </Link> </Nav.Link>
+                  <Nav.Link> <Link to="/guests"> <a>Hostia</a> </Link> </Nav.Link>
+                  <Nav.Link> <Link to="/roomsinfo"> <a>Izby</a> </Link> </Nav.Link>
+                  <Nav.Link> <Link to="/manageroles"> <a>Zamestnanci</a> </Link> </Nav.Link>
                 </Nav> :
                 null
               }

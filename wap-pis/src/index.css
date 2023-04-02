@@ -505,6 +505,16 @@ a:hover {
   margin-bottom: 5px;
 }
 
+.filter-employees {
+  width: 50%;
+  margin: auto;
+}
+
+.button-employee-new {
+  width: 30%;
+  margin-top: 30px;
+}
+
 @media only screen and (max-width: 1300px) {
   .service{
     display: inline-block;
@@ -592,6 +602,11 @@ a:hover {
   .reservation Button {
     width: 80%;
   }
+
+  .filter-employees {
+    width: 80%;
+    margin: auto;
+  }
 }
 
 @media only screen and (max-width: 900px) {
@@ -655,4 +670,15 @@ a:hover {
   .guest-button {
     width: 50%;
   }
+
+  .filter-employees {
+    width: 100%;
+    margin: auto;
+  }
+
+  
+.button-employee-new {
+  width: 60%;
+  margin-top: 30px;
+}
 }

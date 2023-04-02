@@ -8,7 +8,6 @@ const signInSchema = Yup.object().shape({
 
   password: Yup.string()
     .required("Heslo je povinné")
-    .min(6, "Heslo je moc krátke, minimálne 6 znakov"),
 });
 
 const initialValues = {
@@ -22,7 +21,7 @@ const Login =() => {
     // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
     function login(values){
       localStorage.setItem("email", values.email);
-      localStorage.setItem("role", "employee");
+      localStorage.setItem("role", "admin");
       navigate("/", { replace: true });
     }
 

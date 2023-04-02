@@ -47,7 +47,6 @@ function GuestList() {
     }, [roomNumber, personName, checkAccomodated, checkNotAccomodated]);
     
     function filtering(){
-        console.log("filtrujem")
         let tmpArray = []
         json.map(guest => {
             let add = true;
@@ -71,7 +70,6 @@ function GuestList() {
             }
         })
         setDisplayedGuests(tmpArray)
-        console.log(displayedGuests)
       }
 
     function checkout(index){
