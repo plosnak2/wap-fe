@@ -468,7 +468,42 @@ a:hover {
   margin-top: 20px;
 }
 
+.room-employee {
+  display: flex;
+  margin-top: 30px;
+  width: 100%;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 50px;
+}
 
+.roomImage-employee {
+  width: 30%;
+
+}
+
+.imgroom-employee {
+  width: 100%
+}
+
+.description-employee {
+  width: 70%;
+  padding:10px;
+  text-align: center;
+}
+
+.description-employee h3 {
+  text-align: center;
+}
+
+.description-employee p {
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 5px;
+}
 
 @media only screen and (max-width: 1300px) {
   .service{
@@ -517,7 +552,7 @@ a:hover {
     width: 33%;
   }
 
-    .roomImage {
+  .roomImage {
     width:100%;
   
   }
@@ -527,6 +562,19 @@ a:hover {
   }
 
   .room{
+    display: inline-block;
+  }
+
+  .roomImage-employee {
+    width:100%;
+  
+  }
+
+  .description-employee {
+    width: 100%
+  }
+
+  .room-employee{
     display: inline-block;
   }
 

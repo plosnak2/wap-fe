@@ -37,7 +37,7 @@ function SlideShow() {
         />
 
         <Carousel.Caption>
-          <h3>Vychutnajte si čato našej kuchyne</h3>
+          <h3>Vychutnajte si čaro našej kuchyne</h3>
           <p>
             Domáca aj zahraničná kuchyňa plná tých najlepších kuchárov.
           </p>
