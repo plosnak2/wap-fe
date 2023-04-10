@@ -75,6 +75,7 @@ function CustomerReservations() {
     const handleShow = () => setShow(true);
     const [openServices, setOpenServices] = useState([]);
     const [loading, setLoading] = useState(true)
+    // TODO -> tu je potrebné odchytit z be vsetky rezervácie viazane na tohto zakaznika (neviem v akom formate to BE posle ale nejaky provizorny je vyššie v jsone)
     useEffect(() => {
         let openServicesTmp = []
         json.map((service, index) => {
@@ -85,7 +86,6 @@ function CustomerReservations() {
         })
         setOpenServices(openServicesTmp)
         setLoading(false)
-        // tu sa fetchnu informacie o rezervaciach
       }, []);
 
     function handleChange(index) {
@@ -95,6 +95,7 @@ function CustomerReservations() {
         console.log(openServices)
     }
 
+    // TODO dokončit funkcionalitu aby sa rezervacia stornovala z BE (vymazala) a presmerovanie (keď tak)
     function storno(resId, index){
         console.log("stornujem res: ", resId)
         console.log("index pola: ", index)

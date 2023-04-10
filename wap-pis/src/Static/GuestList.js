@@ -42,6 +42,7 @@ function GuestList() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // TODO odhchytit info o aktualne ubytovaných hostoch z BE 
     useEffect(() => {
         filtering();
     }, [roomNumber, personName, checkAccomodated, checkNotAccomodated]);
@@ -73,7 +74,7 @@ function GuestList() {
       }
 
     function checkout(index){
-        //todo
+        // TODO -> dorobit odubytovanie hosta - poslat dotaz na BE
     }
 
     return (

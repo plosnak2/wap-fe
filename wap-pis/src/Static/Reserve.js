@@ -32,6 +32,7 @@ function Reserve(props) {
     const [services, setServices] = useState([])
     const [price, setPrice] = useState(Math.round((props.endDate.setHours(0,0,0,0,) - props.startDate.setHours(0,0,0,0))/86400000) * props.room.priceForNight)
     const [payment, setPayment] = useState(1);
+    //TODO potrebné odchytit info o službach z BE (najlepsie keby obsahuje položky pomenovane ako vyššie lebo bude treba menit nazvy premennych v renderi)
     useEffect(() => {
         let tempArr = []
         json.map((service, index) => {
@@ -104,6 +105,7 @@ function Reserve(props) {
                     <FormControlLabel value={2} control={<Radio />} label="Hotovosť" /> <BsCash size={30}/>
                 </div>
             </RadioGroup>
+            {/* TODO dorobit funkcionalitu tohto buttonu pre rezerváciu (aby sa vytvorila rezervacia na BE, uložila do db so všetkými potrebnými info) a presmerovať potom asi do reservationslist*/}
             <Button variant="success">Rezervovať - {price}€</Button> 
         </div>
       </div>

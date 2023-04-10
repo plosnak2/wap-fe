@@ -30,6 +30,7 @@ const json = [
 
 
 function Rooms() {
+  //TODO odchytit info o izbach z BE
   useEffect(() => {
 
   }, []);

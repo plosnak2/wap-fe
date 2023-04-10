@@ -46,7 +46,7 @@ const signInSchema = Yup.object().shape({
 const RegisterEmpl =() => {
     const navigate = useNavigate();
     
-    // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
+    // TODO TU SA BUDE POSIELAT DOTAZ NA BE - dorobit vytvorenie zamstnanca v databazi (ak tam bude rovnaky s existujucim mailom) tak oznamit adminovi tuto info
     function registerEmployee(values){
         console.log(values)
     }   

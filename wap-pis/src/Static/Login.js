@@ -18,7 +18,7 @@ const initialValues = {
 const Login =() => {
     const navigate = useNavigate();
     
-    // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
+    // TODO TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API - dorobiť ak bol login dobrý tak do localstoragu uložit mail a rolu (customer, admin, employee), pokial bol login zlý tak dat uživatelovi nejako vedieť, že zadal neplatný mail alebo heslo
     function login(values){
       localStorage.setItem("email", values.email);
       localStorage.setItem("role", "admin");

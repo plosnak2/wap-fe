@@ -39,7 +39,6 @@ function CheckIn() {
     });
 
     function onChangeTickets(e, field, values, setValues) {
-        // update dynamic form
         const tickets = [...values.tickets];
         const numberOfTickets = e.target.value || 0;
         const previousNumber = parseInt(field.value || '0');
@@ -54,12 +53,11 @@ function CheckIn() {
         }
         setValues({ ...values, tickets });
 
-        // call formik onChange method
         field.onChange(e);
     }
 
     function onSubmit(fields) {
-        // display form field values on success
+        // TODO dokončit funkcionalitu pre priradenie hostí k izbe -> čo sa stane po kliknuti na tlačidlo ubytovat (aby sa vedelo akí hostia su v danej izbe v daný čas)
         alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4));
     }
 

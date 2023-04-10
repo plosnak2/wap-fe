@@ -56,7 +56,7 @@ const Register =() => {
         <input class="form-control form-control-lg" onClick={onClick} ref={ref} value={format(new Date(startDate), "dd-MM-yyyy")}/>
       ));
     
-    // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
+    // TODO TU SA BUDE POSIELAT DOTAZ NA BE CEZ REGISTER API - dorobiť, že ak registracia prebehla uspešne tak asi presmerovat na login a ak zle (že taky mail už v db existuje) tak treba dat uživatelovi vediet že musi zvolit iný alebo tak
     function register(values){
       console.log(values)
       console.log(startDate)

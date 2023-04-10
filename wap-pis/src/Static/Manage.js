@@ -26,6 +26,7 @@ function Manage() {
     const [displayedEmployees, setDisplayedEmployees] = useState([])
     const navigate = useNavigate();
 
+    // TODO odchytit info o zamestnanococh
     useEffect(() => {
         filtering();
     }, [personName]);
@@ -50,7 +51,7 @@ function Manage() {
     }
 
     function deleteEmployee(index, employeeId){
-
+        // TODO dorobit odstranenie zamestnanca z DB
     }
 
     return (

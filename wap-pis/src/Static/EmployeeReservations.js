@@ -84,6 +84,7 @@ function EmployeeReservations() {
       </Button>
     ));
 
+    // TODO potrebne odchytit informacie o rezervaciach (nejaky provizorny json vyssie - ak bude iný tak upravit nazvy premenných nizsie v renderi)
   useEffect(() => {
     let openServicesTmp = []
         json.map((service, index) => {

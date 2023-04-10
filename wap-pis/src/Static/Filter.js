@@ -44,12 +44,13 @@ function Filter() {
       </Button>
     ));
 
+    //TODO potrebné odchytiť informácie o izbach a a uložit do nejakeho stavu (podobne ako je teraz json hore) najlepsie aby mal json obsahoval tie položky čo su vyssie, lebo potom bude potrebne menit nazbvy premenných dole v renderi
   useEffect(() => {
     filtering();
   }, [startDate, endDate, value]);
 
   function filtering(){
-    //setDisplayedRooms([]);
+    //TODO tu sa použiva ten json tak to nebude on ale tie odchytene vsetky izby
     let tempArray = []
     json.map((room, index) => 
     {

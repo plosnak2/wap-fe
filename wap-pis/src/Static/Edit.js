@@ -68,10 +68,10 @@ const Edit =() => {
       ));
     
     useEffect(() => {
-        // tu sa fetchne info o userovi z BE a nastavia sa initialValues (podobne ako je vyššie) ale s fetchnutými údajmi
+        // TODO tu sa fetchne info o userovi z BE a nastavia sa initialValues (podobne ako je vyššie) ale s fetchnutými údajmi
     }, []);
     
-    // TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API
+    // TODO TU SA BUDE POSIELAT DOTAZ NA BE aby sa upravili info o zakaznikovi (poprípade ak zvolil novy mail taký, ktory už v db je tak musi upozornit uživatela)
     function edit(values){
       console.log(values)
       console.log(startDate)
