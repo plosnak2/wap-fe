@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const phoneRegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
 
@@ -38,46 +40,53 @@ const signInSchema = Yup.object().shape({
       .string()
       .matches(phoneRegExp, 'Číslo nieje validné')
   });
-  
 
-const json ={
-    "customerFirstName": "Jakub",
-    "customerLastName": "Zaukolec",
-    "customerBirthDate": "1999-08-02T23:00:00.000Z",
-    "address": "Sverepec 515",
-    "password": "aaaaaa",
-    "email": "aa@gmail.sk",
-    "phoneNumber": "0902304508"
-  }
-
-  let initialValues = {
-    email: json.email,
-    password: json.password,
-    retypePassword: json.password,
-    firstName: json.customerFirstName,
-    lastName: json.customerLastName,
-    address: json.address,
-    phoneNumber:json.phoneNumber
-}
 
 const Edit =() => {
     const navigate = useNavigate();
-    const [startDate, setStartDate] = useState(new Date(json.customerBirthDate));
+    const [startDate, setStartDate] = useState(new Date());
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
         <input class="form-control form-control-lg" onClick={onClick} ref={ref} value={format(new Date(startDate), "dd-MM-yyyy")}/>
       ));
+    const [loading, setLoading] = useState(true);
+    const [initialValues, setInitialValues] = useState([]);
+    
+
+    
     
     useEffect(() => {
         // TODO tu sa fetchne info o userovi z BE a nastavia sa initialValues (podobne ako je vyššie) ale s fetchnutými údajmi
-    }, []);
+      axios.get('https://localhost:7032/api/Customer/' + localStorage.getItem("id")).then((response) => {
+        console.log(response);
+        response.data.retypePassword = response.data.password;
+        setInitialValues(response.data);
+        setStartDate(new Date(response.data.customerBirthDate));
+        setLoading(false);
+      }).catch((err) => {
+        
+      });
+      }, []);
     
     // TODO TU SA BUDE POSIELAT DOTAZ NA BE aby sa upravili info o zakaznikovi (poprípade ak zvolil novy mail taký, ktory už v db je tak musi upozornit uživatela)
     function edit(values){
       console.log(values)
       console.log(startDate)
+      values.customerBirthDate = startDate;
+      values.id = localStorage.getItem("id");
+      axios.put('https://localhost:7032/api/Customer/' + localStorage.getItem("id"), values).then((response) => {
+        console.log(response);
+        if(response.status == 204){
+          if(values.email != localStorage.getItem('email')){
+            localStorage.setItem('email', values.email);
+          }
+          toast("Zmenené údaje boli uložené");
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
     }
 
-    return (
+    return loading ? (<div>Loading</div>) : (
     <Formik
       initialValues={initialValues}
       validationSchema={signInSchema}
@@ -96,7 +105,7 @@ const Edit =() => {
               <div class="col-10 ">
                 <div class="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                   <div class="card-body p-5 text-center">
-
+                    <Toaster position="top-center" reverseOrder={false}/>
                     <Form class="mb-md-5 mt-md-4 pb-5">
                       <h2 class="fw-bold mb-2 text-uppercase">Upraviť údaje</h2>
                       <div class="row">

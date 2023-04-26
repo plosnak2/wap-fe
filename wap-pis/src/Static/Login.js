@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const signInSchema = Yup.object().shape({
   email: Yup.string().email('Email musí mať platný formát').required("Email je povinný"),
@@ -20,9 +22,24 @@ const Login =() => {
     
     // TODO TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API - dorobiť ak bol login dobrý tak do localstoragu uložit mail a rolu (customer, admin, employee), pokial bol login zlý tak dat uživatelovi nejako vedieť, že zadal neplatný mail alebo heslo
     function login(values){
-      localStorage.setItem("email", values.email);
-      localStorage.setItem("role", "admin");
-      navigate("/", { replace: true });
+
+      axios.post('https://localhost:7032/api/Login', values).then((response) => {
+        //localStorage.setItem("email", values.email);
+        localStorage.setItem("email", response.data.email);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("id", response.data.id);
+        console.log(response);
+        console.log(localStorage.getItem("email"));
+        console.log(localStorage.getItem("role"));
+        navigate("/", { replace: true });
+      }).catch((err) => {
+        if(err.response.status == 401){
+          toast.error("Nesprávne heslo!");
+        }
+        if(err.response.status == 404){
+          toast.error("Zlý email!");
+        }
+      });
     }
 
     return (
@@ -45,7 +62,7 @@ const Login =() => {
               <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                   <div class="card-body p-5 text-center">
-
+                    <Toaster position="top-center" reverseOrder={false}/>
                     <Form class="mb-md-5 mt-md-4 pb-5">
 
                       <h2 class="fw-bold mb-2 text-uppercase">Prihlásiť</h2>

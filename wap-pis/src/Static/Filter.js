@@ -9,6 +9,7 @@ import { RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import { FaCalendar, FaBed  } from 'react-icons/fa';
 import { BiSad } from 'react-icons/bi';
 import {Navigate, useNavigate } from 'react-router-dom'
+import axios from "axios";
 
 const json = [
   {
@@ -43,16 +44,28 @@ function Filter() {
         {value}
       </Button>
     ));
+  const [allRooms, setAllRooms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
     //TODO potrebné odchytiť informácie o izbach a a uložit do nejakeho stavu (podobne ako je teraz json hore) najlepsie aby mal json obsahoval tie položky čo su vyssie, lebo potom bude potrebne menit nazbvy premenných dole v renderi
   useEffect(() => {
-    filtering();
+    
+    axios.get('https://localhost:7032/api/Room')
+    .then((response) => {
+          console.log(response);
+          setAllRooms(response.data);
+          filtering()
+          setLoading(false);
+    })
+    .catch((err) => {
+          
+    });
   }, [startDate, endDate, value]);
 
   function filtering(){
     //TODO tu sa použiva ten json tak to nebude on ale tie odchytene vsetky izby
     let tempArray = []
-    json.map((room, index) => 
+    allRooms.map((room, index) => 
     {
       if(value == room.capacity)
       {
@@ -73,10 +86,11 @@ function Filter() {
       }
     })
     setDisplayedRooms(tempArray);
+    //setLoading(false);
   }
 
-  return (
-    <div class="container">
+  return loading ? (<div>Loading</div>) :
+    (<div class="container">
         <div className='filter'>
             <div className='prichod'>
             <h4> <FaCalendar  /> Dátum príchodu</h4>

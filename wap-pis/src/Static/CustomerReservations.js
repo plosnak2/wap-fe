@@ -12,6 +12,7 @@ import { BsBank, BsCash} from 'react-icons/bs';
 import Collapse from 'react-bootstrap/Collapse';
 import { RotatingLines } from  'react-loader-spinner'
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
 
 
 const json = [
@@ -77,15 +78,21 @@ function CustomerReservations() {
     const [loading, setLoading] = useState(true)
     // TODO -> tu je potrebné odchytit z be vsetky rezervácie viazane na tohto zakaznika (neviem v akom formate to BE posle ale nejaky provizorny je vyššie v jsone)
     useEffect(() => {
-        let openServicesTmp = []
-        json.map((service, index) => {
-            let item = {
-                open: false
-            }
-            openServicesTmp.push(item)
-        })
+        axios.get('https://localhost:7032/api/Reservation/byCustomer/' + localStorage.getItem("id")).then((response) => {
+          console.log(response);
+          let openServicesTmp = []
+          json.map((service, index) => {
+              let item = {
+                  open: false
+              }
+              openServicesTmp.push(item)
+          })
         setOpenServices(openServicesTmp)
         setLoading(false)
+        }).catch((err) => {
+          
+        });
+        
       }, []);
 
     function handleChange(index) {

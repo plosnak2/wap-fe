@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const phoneRegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
 
@@ -57,9 +59,17 @@ const Register =() => {
       ));
     
     // TODO TU SA BUDE POSIELAT DOTAZ NA BE CEZ REGISTER API - dorobiť, že ak registracia prebehla uspešne tak asi presmerovat na login a ak zle (že taky mail už v db existuje) tak treba dat uživatelovi vediet že musi zvolit iný alebo tak
-    function register(values){
-      console.log(values)
-      console.log(startDate)
+    function register(values){  
+      console.log(values);
+      values.customerBirthDate = startDate;    
+      axios.post('https://localhost:7032/api/Customer', values).then((response) => {
+        console.log(response);
+        navigate("/login", { replace: true })
+      }).catch((err) => {
+        if(err.response.status == 409){
+          toast.error("Užívateľ so zadanou emailovou adresou už existuje!");
+        }
+      });
     }
 
     return (
@@ -81,7 +91,7 @@ const Register =() => {
               <div class="col-10 ">
                 <div class="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                   <div class="card-body p-5 text-center">
-
+                  <Toaster position="top-center" reverseOrder={false}/>
                     <Form class="mb-md-5 mt-md-4 pb-5">
                       <h2 class="fw-bold mb-2 text-uppercase">Registrácia</h2>
                       <div class="row">
