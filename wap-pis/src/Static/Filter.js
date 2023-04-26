@@ -11,7 +11,7 @@ import { BiSad } from 'react-icons/bi';
 import {Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
-const json = [
+/*const json = [
   {
     "roomNumber": 211,
     "capacity": 2,
@@ -30,7 +30,7 @@ const json = [
       }
     ]
   }
-]
+]*/
 
 function Filter() {
   const [displayedRooms, setDisplayedRooms] = useState([])
@@ -55,12 +55,12 @@ function Filter() {
           console.log(response);
           setAllRooms(response.data);
           filtering()
-          setLoading(false);
+          //setLoading(false);
     })
     .catch((err) => {
           
     });
-  }, [startDate, endDate, value]);
+  }, [startDate, endDate, value, loading]);
 
   function filtering(){
     //TODO tu sa použiva ten json tak to nebude on ale tie odchytene vsetky izby
@@ -86,7 +86,9 @@ function Filter() {
       }
     })
     setDisplayedRooms(tempArray);
-    //setLoading(false);
+    if(loading == true){
+      setLoading(false);
+    }
   }
 
   return loading ? (<div>Loading</div>) :

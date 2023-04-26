@@ -76,20 +76,24 @@ function CustomerReservations() {
     const handleShow = () => setShow(true);
     const [openServices, setOpenServices] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [reservations, setReservations] = useState([]);
     // TODO -> tu je potrebné odchytit z be vsetky rezervácie viazane na tohto zakaznika (neviem v akom formate to BE posle ale nejaky provizorny je vyššie v jsone)
     useEffect(() => {
-        axios.get('https://localhost:7032/api/Reservation/byCustomer/' + localStorage.getItem("id")).then((response) => {
+        axios.get('https://localhost:7032/api/Reservation/byCustomer/' + localStorage.getItem("id"))
+        .then((response) => {
           console.log(response);
           let openServicesTmp = []
-          json.map((service, index) => {
+          response.data.map((service, index) => {
               let item = {
                   open: false
               }
               openServicesTmp.push(item)
           })
         setOpenServices(openServicesTmp)
+        setReservations(response.data);
         setLoading(false)
-        }).catch((err) => {
+        })
+        .catch((err) => {
           
         });
         
@@ -104,8 +108,13 @@ function CustomerReservations() {
 
     // TODO dokončit funkcionalitu aby sa rezervacia stornovala z BE (vymazala) a presmerovanie (keď tak)
     function storno(resId, index){
-        console.log("stornujem res: ", resId)
-        console.log("index pola: ", index)
+        axios.delete('https://localhost:7032/api/Reservation/' + resId)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          
+        });
     }
 
     if(loading)
@@ -129,19 +138,19 @@ function CustomerReservations() {
             <div className="customers-reservations">
             <h1>Rezervácie</h1>
             {
-                json.map((reservation, index) => {
+                reservations.map((reservation, index) => {
                     return (
                         <div className="wrapper-reservations">
                         <Modal show={show} onHide={handleClose}>
                             <Modal.Header closeButton>
                             <Modal.Title>Stornovať rezerváciu?</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body>Prajete si stornovať rezerváciu {reservation.reservationID}</Modal.Body>
+                            <Modal.Body>Prajete si stornovať rezerváciu {reservation.id}</Modal.Body>
                             <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Zrušiť
                             </Button>
-                            <Button variant="danger" onClick={() => storno(reservation.reservationID, index)}>
+                            <Button variant="danger" onClick={() => storno(reservation.id, index)}>
                                 Stornovať
                             </Button>
                             </Modal.Footer>

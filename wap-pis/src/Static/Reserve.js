@@ -9,10 +9,11 @@ import Button from 'react-bootstrap/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import { BsBank, BsCash} from 'react-icons/bs';
+import axios from "axios";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const json = [
+/*const json = [
     {
         "servicePrice": 50,
         "serviceName": "Wellness",
@@ -26,23 +27,31 @@ const json = [
         "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
     }
 
-  ]
+  ]*/
 
 function Reserve(props) {
+    const navigate = useNavigate();
     const [services, setServices] = useState([])
     const [price, setPrice] = useState(Math.round((props.endDate.setHours(0,0,0,0,) - props.startDate.setHours(0,0,0,0))/86400000) * props.room.priceForNight)
     const [payment, setPayment] = useState(1);
     //TODO potrebné odchytit info o službach z BE (najlepsie keby obsahuje položky pomenovane ako vyššie lebo bude treba menit nazvy premennych v renderi)
     useEffect(() => {
-        let tempArr = []
-        json.map((service, index) => {
-            let item = {
-                service: service,
-                isChecked: false
-            }
-            tempArr.push(item)
+        axios.get('https://localhost:7032/api/Service')
+        .then((response) => {
+            console.log(response);
+            let tempArr = []
+            response.data.map((service, index) => {
+                let item = {
+                    service: service,
+                    isChecked: false
+                }
+                tempArr.push(item)
+            })
+            setServices(tempArr)
         })
-        setServices(tempArr)
+        .catch((err) => {
+            
+        });
       }, []);
 
     const handleChange = (event, index) => {
@@ -58,6 +67,50 @@ function Reserve(props) {
         }
         setPrice(tempPrice)
     };
+
+    const getServicesIds = (ids) => {
+        ids = []
+        services.map((element) => {
+            if(element.isChecked == true){
+                ids.push(element.service.id)
+            }
+        })
+        return ids;
+    }
+
+    const makeReservation = () => {
+        let ids = getServicesIds()
+        let status;
+        let paymentMethod;
+        if(payment == 1){
+            status = "Paid";
+            paymentMethod = "Bank";
+        }
+        if(payment == 2){
+            status = "Created";
+            paymentMethod = "Cash";
+        }
+        const reservationInput = {
+            "customerId": localStorage.getItem("id"),
+            "arrivalDate": new Date(props.startDate),
+            "departureDate": new Date(props.endDate),
+            "price": price,
+            "status": status,
+            "createdAt": new Date(),
+            "paymentMethod": paymentMethod,
+            "services": ids,
+            "roomNumber": props.room.roomNumber
+        }
+        console.log(reservationInput)
+        axios.post('https://localhost:7032/api/Reservation', reservationInput)
+        .then((response) => {
+            console.log(response);    
+        })
+        .catch((err) => {
+            
+        });
+        navigate("/myreservations", { replace: true })
+    }
 
 
     return (
@@ -106,7 +159,7 @@ function Reserve(props) {
                 </div>
             </RadioGroup>
             {/* TODO dorobit funkcionalitu tohto buttonu pre rezerváciu (aby sa vytvorila rezervacia na BE, uložila do db so všetkými potrebnými info) a presmerovať potom asi do reservationslist*/}
-            <Button variant="success">Rezervovať - {price}€</Button> 
+            <Button variant="success" onClick={() => makeReservation()}>Rezervovať - {price}€</Button> 
         </div>
       </div>
     );
