@@ -9,12 +9,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaFilter, FaBed  } from 'react-icons/fa';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
 
 const json = [
     {
       "firstName": "Peter",
       "lastName": "Bomber",
-      "employeeId": 518
+      "id": 518
     }
   ]
 
@@ -26,15 +27,26 @@ function Manage() {
     const [displayedEmployees, setDisplayedEmployees] = useState([])
     const navigate = useNavigate();
 
+    const [allEmployee, setAllEmployee] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     // TODO odchytit info o zamestnanococh
     useEffect(() => {
-        filtering();
-    }, [personName]);
+        axios.get('https://localhost:7032/api/Employee')
+        .then((response) => {
+            console.log(response);
+            setAllEmployee(response.data);
+            filtering();
+        })
+        .catch((err) => {
+            
+        });
+    }, [personName, loading]);
 
     function filtering(){
         console.log("filtrujem")
         let tmpArray = []
-        json.map(employee => {
+        allEmployee.map(employee => {
             let add = true;
 
             if(!employee.lastName.toLowerCase().includes(personName.toLowerCase()))
@@ -48,13 +60,23 @@ function Manage() {
             }
         })
         setDisplayedEmployees(tmpArray)
+        setLoading(false)
     }
 
     function deleteEmployee(index, employeeId){
         // TODO dorobit odstranenie zamestnanca z DB
+        console.log(employeeId);
+        axios.delete('https://localhost:7032/api/Employee/' + employeeId)
+        .then((response) => {
+            console.log(response);
+            setLoading(true);
+        })
+        .catch((err) => {
+            
+        });
     }
 
-    return (
+    return loading ? (<div>Loading</div>) : (
         <div className="backgroundImageCVR">
         <div className="background-image"></div>
             <div className="checkin-background">
@@ -82,20 +104,20 @@ function Manage() {
                                 displayedEmployees.map((employee, index) => {
                                     return(
                                         <tr>
-                                            <td>{employee.employeeId}</td>
+                                            <td>{employee.id}</td>
                                             <td>{employee.firstName}</td>
                                             <td>{employee.lastName}</td>
                                             <td><Button variant="danger" style={{width:"50%"}} onClick={handleShow}>Vymazať</Button> </td>
                                             <Modal show={show} onHide={handleClose}>
                                                 <Modal.Header closeButton>
-                                                <Modal.Title>Vymazať zamestnanca {employee.employeeId}</Modal.Title>
+                                                <Modal.Title>Vymazať zamestnanca {employee.id}</Modal.Title>
                                                 </Modal.Header>
                                                 <Modal.Body>Vymazať zamestnanca {employee.firstName} {employee.lastName}?</Modal.Body>
                                                 <Modal.Footer>
                                                 <Button variant="secondary" onClick={handleClose}>
                                                     Zrušiť
                                                 </Button>
-                                                <Button variant="danger" onClick={() => deleteEmployee(index, employee.employeeId)}>
+                                                <Button variant="danger" onClick={() => (deleteEmployee(index, employee.id), handleClose())}>
                                                     Áno
                                                 </Button>
                                                 </Modal.Footer>

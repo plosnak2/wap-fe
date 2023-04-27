@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const phoneRegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
 
@@ -49,6 +51,16 @@ const RegisterEmpl =() => {
     // TODO TU SA BUDE POSIELAT DOTAZ NA BE - dorobit vytvorenie zamstnanca v databazi (ak tam bude rovnaky s existujucim mailom) tak oznamit adminovi tuto info
     function registerEmployee(values){
         console.log(values)
+        axios.post('https://localhost:7032/api/Employee', values)
+        .then((response) => {
+            console.log(response);
+            navigate("/manageroles", { replace: true })
+        })
+        .catch((err) => {
+          if(err.response.status == 409){
+            toast.error("Zamestnanec so zadanou emailovou adresou už existuje!");
+          }
+        });
     }   
 
     return (
@@ -70,7 +82,7 @@ const RegisterEmpl =() => {
               <div class="col-10 ">
                 <div class="card bg-dark text-white" style={{borderRadius: "1rem"}}>
                   <div class="card-body p-5 text-center">
-
+                    <Toaster position="top-center" reverseOrder={false}/>
                     <Form class="mb-md-5 mt-md-4 pb-5">
                       <h2 class="fw-bold mb-2 text-uppercase">Registrovať zamestnanca</h2>
                       <div class="row">
