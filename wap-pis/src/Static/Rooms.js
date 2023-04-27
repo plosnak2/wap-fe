@@ -9,30 +9,21 @@ import { RadioGroup, Radio, FormControlLabel } from '@mui/material';
 import { FaCalendar, FaBed  } from 'react-icons/fa';
 import { BiSad } from 'react-icons/bi';
 import {Navigate, useNavigate } from 'react-router-dom'
-
-const json = [
-    {
-      "roomNumber": 212,
-      "image": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg",
-      "floor": 3,
-      "capacity": 2,
-      "priceForNight": 115,
-      "description": "Izba je priestranná s výhľadom na more. Obsahuje veľkú manželskú posteľ, kúpeľňu spolu s wc. Na izbe je taktiež minibar dopĺňaný každý deň nealkoholickými a miestnymi alkoholickými nápojmi. Nachádza sa 2 minúty pešo od mora a je vzdialené 30 metrov od recepcie. Je naklonená na slnečnú stranu.",
-      "guest": [
-        {
-          "firstName": "Pavol",
-          "lastName": "Bomber",
-          "accomodated": true
-        }
-      ]
-    }
-  ]
+import axios from "axios";
 
 
 function Rooms() {
+  const [rooms, setRooms] = useState([]);
   //TODO odchytit info o izbach z BE
   useEffect(() => {
-
+    axios.get('https://localhost:7032/api/Room')
+    .then((response) => {
+        console.log(response);
+        setRooms(response.data);
+    })
+    .catch((err) => {
+        
+    });
   }, []);
 
   function guestsInRoom(room){
@@ -41,19 +32,19 @@ function Rooms() {
         if (room.guest[i].accomodated === true)
         {
             guests++;
-        }
-        return guests
+        }        
     }
+    return guests
   }
 
   return (
     <div class="container">
         {
-            json.map((room, index) => {
+            rooms.map((room, index) => {
                 return(
                     <div class="room-employee">
                       <div className='roomImage-employee'>
-                        <img src={room.image} className='imgroom-employee' alt=''/>
+                        <img src={room.photo} className='imgroom-employee' alt=''/>
                       </div>
                       <div class="description-employee">
                         <h3>Číslo izby: {room.roomNumber}</h3>

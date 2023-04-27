@@ -6,10 +6,14 @@ import { useState, useEffect, useContext } from "react";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 function CheckIn() {
     const params = useLocation();
     const [capacity, setCapacity] = useState([])
+    const navigate = useNavigate();
+    
     useEffect(() => {
         let tmpArr = []
         for(let i = 1; i <= params.state.reservation.room.capacity; i++)
@@ -58,7 +62,29 @@ function CheckIn() {
 
     function onSubmit(fields) {
         // TODO dokončit funkcionalitu pre priradenie hostí k izbe -> čo sa stane po kliknuti na tlačidlo ubytovat (aby sa vedelo akí hostia su v danej izbe v daný čas)
-        alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4));
+        let tmp = []
+        fields.tickets.map((item) => {
+            let elem = {
+                "firstName": item.name,
+                "lastName": item.surname
+            }
+            tmp.push(elem)
+        })
+        
+        const addGuests = {
+            "reservationId": params.state.reservation.id,
+            "guests": tmp
+        }
+        console.log(addGuests)
+        axios.post('https://localhost:7032/api/Reservation/Checkin', addGuests)
+        .then((response) => {
+            console.log(response)
+            toast("Hostia ubytovaný");
+            navigate("/reservationslist", { replace: true });
+        })
+        .catch((err) => {
+
+        });
     }
 
 
@@ -66,6 +92,7 @@ function CheckIn() {
         <div className="backgroundImageCVR">
         <div className="background-image"></div>
             <div className="checkin-background">
+            <Toaster position="top-center" reverseOrder={false}/>
             <h3>Počet hostí:</h3>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
             {({ errors, values, touched, setValues }) => (

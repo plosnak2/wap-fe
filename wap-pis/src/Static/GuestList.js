@@ -14,23 +14,10 @@ import Checkbox from '@mui/material/Checkbox';
 import Moment from 'moment';
 import Collapse from 'react-bootstrap/Collapse';
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-const json = [
-    {
-      "guestName": "Pavol",
-      "guestLastName": "Bomber",
-      "accomodated": true,
-      "room": {
-        "roomNumber": 212
-      },
-      "reservation": {
-        "arrivalDate": "2023-04-01T09:36:45.561Z",
-        "departureDate": "2023-04-01T09:36:45.561Z"
-      }
-    }
-  ]
 
 function GuestList() {
     const [roomNumber, setRoomNumber] = useState('')
@@ -41,21 +28,33 @@ function GuestList() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [loading, setLoading] = useState(true);
+    const [allGuests, setAllGuests] = useState([]);
+    const [id, setId] = useState(0);
 
     // TODO odhchytit info o aktualne ubytovaných hostoch z BE 
     useEffect(() => {
-        filtering();
-    }, [roomNumber, personName, checkAccomodated, checkNotAccomodated]);
+        axios.get('https://localhost:7032/api/Room/guests')
+        .then((response) => {
+            console.log(response);
+            filtering(response.data)
+        })
+        .catch((err) => {
+            
+        });
+    }, [roomNumber, personName, checkAccomodated, checkNotAccomodated, loading]);
     
-    function filtering(){
+    function filtering(allGuests){
+        console.log("filtrujem")
+        console.log(allGuests)
         let tmpArray = []
-        json.map(guest => {
+        allGuests.map(guest => {
             let add = true;
             if(!((checkAccomodated && guest.accomodated) || (checkNotAccomodated && !guest.accomodated))){
                 add = false
             }
     
-            if(!guest.room.roomNumber.toString().includes(roomNumber))
+            if(!guest.room.roomnumber.toString().includes(roomNumber))
             {
                 add = false
             }
@@ -71,15 +70,35 @@ function GuestList() {
             }
         })
         setDisplayedGuests(tmpArray)
+        setLoading(false)
       }
 
     function checkout(index){
         // TODO -> dorobit odubytovanie hosta - poslat dotaz na BE
+        console.log(id)
+        console.log(displayedGuests[id].guestName)
+        const deleteGuest = {
+            "guestName": displayedGuests[id].guestName,
+            "guestLastName": displayedGuests[id].guestLastName,
+            "roomNumber": displayedGuests[id].room.roomnumber
+        }
+        
+        axios.post('https://localhost:7032/api/Room/checkout', deleteGuest)
+        .then((response) => {
+            console.log(response)
+            toast("Hosť odubytovaný");
+            //navigate("/", { replace: true });
+            setLoading(true)
+        })
+        .catch((err) => {
+
+        });
     }
 
-    return (
+    return loading ? (<div>Loading</div>) : (
         <div class="container">
         <div className='filter'>
+            <Toaster position="top-center" reverseOrder={false}/>
             <div className='prichod'>
             <h4> <FaFileInvoice  /> Číslo izby:</h4>
                 <Form.Control
@@ -120,7 +139,7 @@ function GuestList() {
                     displayedGuests.map((guest, index) => {
                         return (
                             <tr style={{fontWeight:"bold"}}>
-                                <td>{guest.room.roomNumber}</td>
+                                <td>{guest.room.roomnumber}</td>
                                 <td>{guest.guestName}</td>
                                 <td>{guest.guestLastName}</td>
                                 <td>
@@ -136,21 +155,21 @@ function GuestList() {
                                 }
                                 {
                                     guest.accomodated ?
-                                    <Button variant="success" onClick={handleShow} style={{marginLeft:"10px"}}>Odubytovať</Button> :
+                                    <Button variant="success" onClick={() => (handleShow(), console.log(index), setId(index))} style={{marginLeft:"10px"}}>Odubytovať</Button> :
                                     null
                                 }
 
                                 </td>
                                 <Modal show={show} onHide={handleClose}>
                                 <Modal.Header closeButton>
-                                <Modal.Title>Stornovať rezerváciu?</Modal.Title>
+                                <Modal.Title>Odubytovať hosťa?</Modal.Title>
                                 </Modal.Header>
-                                <Modal.Body>Odubytovať hosťa {guest.guestName} {guest.guestLastName}?</Modal.Body>
+                                <Modal.Body>Odubytovať hosťa?</Modal.Body>
                                 <Modal.Footer>
                                 <Button variant="secondary" onClick={handleClose}>
                                     Zrušiť
                                 </Button>
-                                <Button variant="danger" onClick={() => checkout(index)}>
+                                <Button variant="danger" onClick={() => (checkout(index), handleClose())}>
                                     Áno
                                 </Button>
                                 </Modal.Footer>

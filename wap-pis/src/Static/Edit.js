@@ -82,6 +82,9 @@ const Edit =() => {
           toast("Zmenené údaje boli uložené");
         }
       }).catch((err) => {
+        if(err.response.status == 409){
+          toast.error("Užívateľ so zadanou emailovou adresou už existuje!");
+        }
         console.log(err);
       });
     }

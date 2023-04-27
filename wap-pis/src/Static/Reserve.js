@@ -104,12 +104,12 @@ function Reserve(props) {
         console.log(reservationInput)
         axios.post('https://localhost:7032/api/Reservation', reservationInput)
         .then((response) => {
-            console.log(response);    
+            console.log(response);
+            navigate("/myreservations", { replace: true })
         })
         .catch((err) => {
             
         });
-        navigate("/myreservations", { replace: true })
     }
 
 

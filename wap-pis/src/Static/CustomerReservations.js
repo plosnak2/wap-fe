@@ -90,7 +90,7 @@ function CustomerReservations() {
               }
               openServicesTmp.push(item)
           })
-        setOpenServices(openServicesTmp)        
+        setOpenServices(openServicesTmp)
         setLoading(false)
         })
         .catch((err) => {
@@ -168,7 +168,7 @@ function CustomerReservations() {
                                 <p>Cena:  {reservation.price}€</p>
                             </div>
                             <div className="customer-reservation-info">
-                                <h3>ID rezervácie: {reservation.reservationID}</h3>
+                                <h3>ID rezervácie: {reservation.id}</h3>
                                 {
                                     reservation.status == "Created" ?
                                     <p style={{color:"orange"}}>Stav: Vytvorená</p> :

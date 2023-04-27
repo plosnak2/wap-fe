@@ -13,61 +13,10 @@ import {Navigate, useNavigate } from 'react-router-dom'
 import Checkbox from '@mui/material/Checkbox';
 import Moment from 'moment';
 import Collapse from 'react-bootstrap/Collapse';
+import axios from "axios";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const json = [
-    {
-      "reservationID": "15038",
-      "arrivalDate": "2023-03-29T13:33:19.317Z",
-      "departureDate": "2023-03-30T13:33:19.317Z",
-      "price": 1000,
-      "status": "Paid",
-      "createdAt": "2023-03-29T13:33:19.317Z",
-      "paymentMethod": "Bank",
-      "services": [
-        {
-          "serviceName": "Sauna",
-          "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-          "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        }
-      ],
-      "room": {
-        "roomNumber": 212,
-        "capacity": 2,
-        "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg"
-      },
-      "customer": {
-        "customerFirstName": "Lojzo",
-        "customerLastName": "Hlina",
-      }
-    },
-    {
-      "reservationID": "15039",
-      "arrivalDate": "2023-03-29T13:33:19.317Z",
-      "departureDate": "2023-03-30T13:33:19.317Z",
-      "price": 1500,
-      "status": "Created",
-      "createdAt": "2023-03-29T13:33:19.317Z",
-      "paymentMethod": "Cash",
-      "services": [
-        {
-          "serviceName": "Wellness",
-          "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-          "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        }
-      ],
-      "room": {
-        "roomNumber": 213,
-        "capacity": 4,
-        "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg"
-      },
-      "customer": {
-        "customerFirstName": "Lojzo",
-        "customerLastName": "Hlina",
-      }
-    }
-  ]
 
 function EmployeeReservations() {
   const [openServices, setOpenServices] = useState([]);
@@ -83,35 +32,43 @@ function EmployeeReservations() {
         {value}
       </Button>
     ));
+  const [loading, setLoading] = useState(true)
 
     // TODO potrebne odchytit informacie o rezervaciach (nejaky provizorny json vyssie - ak bude iný tak upravit nazvy premenných nizsie v renderi)
   useEffect(() => {
-    let openServicesTmp = []
-        json.map((service, index) => {
-            let item = {
-                open: false
-            }
-            openServicesTmp.push(item)
-        })
-        setOpenServices(openServicesTmp)
-    filtering();
+    axios.get('https://localhost:7032/api/Reservation')
+    .then((response) => {
+          console.log(response);
+          let openServicesTmp = []
+          response.data.map((service, index) => {
+              let item = {
+                  open: false
+              }
+              openServicesTmp.push(item)
+          })
+          setOpenServices(openServicesTmp)
+          filtering(response.data);
+    })
+    .catch((err) => {
+          
+    });
   }, [checkCreated, checkPaid, checkDone, resId, personName]);
 
-  function filtering(){
+  function filtering(reservations){
     console.log("filtrujem")
     let tmpArray = []
-    json.map(reservation => {
+    reservations.map(reservation => {        
         let add = true;
-        if(!((checkCreated && reservation.status === "Created") || (checkPaid && reservation.status === "Paid") || (checkDone && reservation.status === "Done"))){
+        if(!((checkCreated && reservation.status == "Created") || (checkPaid && reservation.status === "Paid") || (checkDone && reservation.status === "Done"))){
             add = false
         }
-
-        if(!reservation.reservationID.includes(resId))
+      
+        if(!reservation.id.toString().includes(resId))
         {
             add = false
         }
         
-        if(!reservation.customer.customerLastName.toLowerCase().includes(personName.toLowerCase()))
+        if(!reservation.customer.lastName.toLowerCase().includes(personName.toLowerCase()))
         {
             add = false
         }
@@ -122,6 +79,7 @@ function EmployeeReservations() {
         }
     })
     setDisplayedReservations(tmpArray)
+    setLoading(false)
   }
 
   function handleChange(index) {
@@ -135,7 +93,7 @@ function EmployeeReservations() {
     navigate('/checkinguests', {state: {reservation: displayedReservations[index]}})
   }
 
-  return (
+  return loading ? (<div>Loading</div>) : (
     <div class="container">
         <div className='filter'>
             <div className='prichod'>
@@ -171,7 +129,7 @@ function EmployeeReservations() {
                             <img src={reservation.room.photo} className='reservation-employee-imgroom' alt=''/>
                         </div>
                         <div className='reservation-employee-info'>
-                            <h3>Číslo rezervácie: {reservation.reservationID}</h3>
+                            <h3>Číslo rezervácie: {reservation.id}</h3>
                             <p>Začiatok pobytu: {Moment(new Date(reservation.arrivalDate)).format('DD.MM.YYYY')}</p>
                             <p>Koniec pobytu: {Moment(new Date(reservation.departureDate)).format('DD.MM.YYYY')}</p>
                             <p>Počet nocí: {Math.round((new Date(reservation.departureDate).setHours(0,0,0,0,) - new Date(reservation.arrivalDate).setHours(0,0,0,0,))/86400000)}</p>
