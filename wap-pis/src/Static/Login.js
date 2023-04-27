@@ -24,7 +24,6 @@ const Login =() => {
     function login(values){
 
       axios.post('https://localhost:7032/api/Login', values).then((response) => {
-        //localStorage.setItem("email", values.email);
         localStorage.setItem("email", response.data.email);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("id", response.data.id);

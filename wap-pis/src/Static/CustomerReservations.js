@@ -82,6 +82,7 @@ function CustomerReservations() {
         axios.get('https://localhost:7032/api/Reservation/byCustomer/' + localStorage.getItem("id"))
         .then((response) => {
           console.log(response);
+          setReservations(response.data);
           let openServicesTmp = []
           response.data.map((service, index) => {
               let item = {
@@ -89,15 +90,14 @@ function CustomerReservations() {
               }
               openServicesTmp.push(item)
           })
-        setOpenServices(openServicesTmp)
-        setReservations(response.data);
+        setOpenServices(openServicesTmp)        
         setLoading(false)
         })
         .catch((err) => {
           
         });
         
-      }, []);
+      }, [loading]);
 
     function handleChange(index) {
         let tmpArr = [...openServices]
@@ -111,6 +111,7 @@ function CustomerReservations() {
         axios.delete('https://localhost:7032/api/Reservation/' + resId)
         .then((response) => {
           console.log(response)
+          setLoading(true)
         })
         .catch((err) => {
           
@@ -145,12 +146,12 @@ function CustomerReservations() {
                             <Modal.Header closeButton>
                             <Modal.Title>Stornovať rezerváciu?</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body>Prajete si stornovať rezerváciu {reservation.id}</Modal.Body>
+                            <Modal.Body>Prajete si stornovať rezerváciu?</Modal.Body>
                             <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
                                 Zrušiť
                             </Button>
-                            <Button variant="danger" onClick={() => storno(reservation.id, index)}>
+                            <Button variant="danger" onClick={() => (storno(reservation.id, index), handleClose())}>
                                 Stornovať
                             </Button>
                             </Modal.Footer>
