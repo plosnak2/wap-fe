@@ -11,13 +11,6 @@ import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 
-const json = [
-    {
-      "firstName": "Peter",
-      "lastName": "Bomber",
-      "id": 518
-    }
-  ]
 
 function Manage() {
     const [personName, setPersonName] = useState("")
@@ -30,7 +23,6 @@ function Manage() {
     const [allEmployee, setAllEmployee] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // TODO odchytit info o zamestnanococh
     useEffect(() => {
         axios.get('https://localhost:7032/api/Employee')
         .then((response) => {
@@ -64,7 +56,6 @@ function Manage() {
     }
 
     function deleteEmployee(index, employeeId){
-        // TODO dorobit odstranenie zamestnanca z DB
         console.log(employeeId);
         axios.delete('https://localhost:7032/api/Employee/' + employeeId)
         .then((response) => {

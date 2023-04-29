@@ -15,61 +15,6 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 
 
-const json = [
-    {
-      "reservationID": "15038",
-      "arrivalDate": "2023-03-29T13:33:19.317Z",
-      "departureDate": "2023-03-29T13:33:19.317Z",
-      "price": 1000,
-      "status": "Paid",
-      "createdAt": "2023-03-29T13:33:19.317Z",
-      "paymentMethod": "Bank",
-      "services": [
-        {
-          "serviceName": "Wellness",
-          "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-          "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        },
-        {
-            "serviceName": "Wellness",
-            "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-            "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-          }
-      ],
-      "room": {
-        "roomNumber": 212,
-        "capacity": 2,
-        "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg"
-      }
-    },
-    {
-      "reservationID": "15038",
-      "arrivalDate": "2023-03-29T13:33:19.317Z",
-      "departureDate": "2023-03-29T13:33:19.317Z",
-      "price": 1000,
-      "status": "Paid",
-      "createdAt": "2023-03-29T13:33:19.317Z",
-      "paymentMethod": "Bank",
-      "services": [
-        {
-          "serviceName": "Wellness",
-          "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-          "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-        },
-        {
-            "serviceName": "Wellness",
-            "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-            "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-          }
-      ],
-      "room": {
-        "roomNumber": 212,
-        "capacity": 2,
-        "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg"
-      }
-    }
-  ]
-
 function CustomerReservations() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -77,7 +22,7 @@ function CustomerReservations() {
     const [openServices, setOpenServices] = useState([]);
     const [loading, setLoading] = useState(true)
     const [reservations, setReservations] = useState([]);
-    // TODO -> tu je potrebné odchytit z be vsetky rezervácie viazane na tohto zakaznika (neviem v akom formate to BE posle ale nejaky provizorny je vyššie v jsone)
+   
     useEffect(() => {
         axios.get('https://localhost:7032/api/Reservation/byCustomer/' + localStorage.getItem("id"))
         .then((response) => {
@@ -106,7 +51,6 @@ function CustomerReservations() {
         console.log(openServices)
     }
 
-    // TODO dokončit funkcionalitu aby sa rezervacia stornovala z BE (vymazala) a presmerovanie (keď tak)
     function storno(resId, index){
         axios.delete('https://localhost:7032/api/Reservation/' + resId)
         .then((response) => {

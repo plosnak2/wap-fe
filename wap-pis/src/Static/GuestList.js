@@ -32,7 +32,6 @@ function GuestList() {
     const [allGuests, setAllGuests] = useState([]);
     const [id, setId] = useState(0);
 
-    // TODO odhchytit info o aktualne ubytovaných hostoch z BE 
     useEffect(() => {
         axios.get('https://localhost:7032/api/Room/guests')
         .then((response) => {
@@ -74,7 +73,6 @@ function GuestList() {
       }
 
     function checkout(index){
-        // TODO -> dorobit odubytovanie hosta - poslat dotaz na BE
         console.log(id)
         console.log(displayedGuests[id].guestName)
         const deleteGuest = {
@@ -87,7 +85,6 @@ function GuestList() {
         .then((response) => {
             console.log(response)
             toast("Hosť odubytovaný");
-            //navigate("/", { replace: true });
             setLoading(true)
         })
         .catch((err) => {
@@ -120,7 +117,7 @@ function GuestList() {
             <div className='izby'>
             <h4> <BsCheckSquareFill  /> Stav hosťa</h4>
                 Ubytovaný: <Checkbox {...label} className="check" checked={checkAccomodated} onChange={() => setCheckAccomodated(!checkAccomodated)}/>
-                Neubytovaný: <Checkbox {...label}  className="check" checked={checkNotAccomodated} onChange={() => setCheckNotAccomodated(!checkNotAccomodated)}/>
+                {/*Neubytovaný: <Checkbox {...label}  className="check" checked={checkNotAccomodated} onChange={() => setCheckNotAccomodated(!checkNotAccomodated)}/>*/}
             </div>
         </div>
 

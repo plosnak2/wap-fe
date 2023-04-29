@@ -20,7 +20,6 @@ const initialValues = {
 const Login =() => {
     const navigate = useNavigate();
     
-    // TODO TU SA BUDE POSIELAT DOTAZ NA BE CEZ LOGIN API - dorobiť ak bol login dobrý tak do localstoragu uložit mail a rolu (customer, admin, employee), pokial bol login zlý tak dat uživatelovi nejako vedieť, že zadal neplatný mail alebo heslo
     function login(values){
 
       axios.post('https://localhost:7032/api/Login', values).then((response) => {

@@ -61,7 +61,6 @@ function CheckIn() {
     }
 
     function onSubmit(fields) {
-        // TODO dokončit funkcionalitu pre priradenie hostí k izbe -> čo sa stane po kliknuti na tlačidlo ubytovat (aby sa vedelo akí hostia su v danej izbe v daný čas)
         let tmp = []
         fields.tickets.map((item) => {
             let elem = {

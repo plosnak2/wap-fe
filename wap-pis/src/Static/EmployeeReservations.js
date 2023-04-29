@@ -34,7 +34,6 @@ function EmployeeReservations() {
     ));
   const [loading, setLoading] = useState(true)
 
-    // TODO potrebne odchytit informacie o rezervaciach (nejaky provizorny json vyssie - ak bude iný tak upravit nazvy premenných nizsie v renderi)
   useEffect(() => {
     axios.get('https://localhost:7032/api/Reservation')
     .then((response) => {

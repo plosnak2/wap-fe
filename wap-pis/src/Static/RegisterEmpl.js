@@ -48,7 +48,6 @@ const signInSchema = Yup.object().shape({
 const RegisterEmpl =() => {
     const navigate = useNavigate();
     
-    // TODO TU SA BUDE POSIELAT DOTAZ NA BE - dorobit vytvorenie zamstnanca v databazi (ak tam bude rovnaky s existujucim mailom) tak oznamit adminovi tuto info
     function registerEmployee(values){
         console.log(values)
         axios.post('https://localhost:7032/api/Employee', values)

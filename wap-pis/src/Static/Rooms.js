@@ -14,7 +14,7 @@ import axios from "axios";
 
 function Rooms() {
   const [rooms, setRooms] = useState([]);
-  //TODO odchytit info o izbach z BE
+  
   useEffect(() => {
     axios.get('https://localhost:7032/api/Room')
     .then((response) => {

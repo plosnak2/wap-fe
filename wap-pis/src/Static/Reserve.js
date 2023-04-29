@@ -13,28 +13,12 @@ import axios from "axios";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-/*const json = [
-    {
-        "servicePrice": 50,
-        "serviceName": "Wellness",
-        "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-        "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-    },
-    {
-        "servicePrice": 30,
-        "serviceName": "Sauna",
-        "description": "Služba zahrňuje vstup do saunového sveta (fínska, infra, parná, bylinková), vírivku a 25 metrový plavecký bazén.",
-        "image": "https://penzionferratask66843.zapwp.com/q:i/r:0/wp:1/w:1/u:https://penzionferrata.sk/wp-content/uploads/elementor/thumbs/wellness-penzion-ferrata-46-p8dnxlnazhf0ynkg1p1n587p7crycjebdx27qzeiog.jpg"
-    }
-
-  ]*/
-
 function Reserve(props) {
     const navigate = useNavigate();
     const [services, setServices] = useState([])
     const [price, setPrice] = useState(Math.round((props.endDate.setHours(0,0,0,0,) - props.startDate.setHours(0,0,0,0))/86400000) * props.room.priceForNight)
     const [payment, setPayment] = useState(1);
-    //TODO potrebné odchytit info o službach z BE (najlepsie keby obsahuje položky pomenovane ako vyššie lebo bude treba menit nazvy premennych v renderi)
+
     useEffect(() => {
         axios.get('https://localhost:7032/api/Service')
         .then((response) => {

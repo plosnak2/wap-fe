@@ -11,26 +11,6 @@ import { BiSad } from 'react-icons/bi';
 import {Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
-/*const json = [
-  {
-    "roomNumber": 211,
-    "capacity": 2,
-    "description": "Izba je priestranná s výhľadom na more. Obsahuje veľkú manželskú posteľ, kúpeľňu spolu s wc. Na izbe je taktiež minibar dopĺňaný každý deň nealkoholickými a miestnymi alkoholickými nápojmi. Nachádza sa 2 minúty pešo od mora a je vzdialené 30 metrov od recepcie. Je naklonená na slnečnú stranu.",
-    "priceForNight": 115,
-    "floor": 3,
-    "photo": "https://static01.nyt.com/images/2019/03/24/travel/24trending-shophotels1/24trending-shophotels1-superJumbo.jpg",
-    "occupancy": [
-      {
-        "startDate": "Mon Apr 01 2023 00:00:00 GMT+0200 (Central European Summer Time)",
-        "endDate": "2023-04-08T00:00:00.000Z"
-      },
-      {
-        "startDate": "Mon Apr 15 2023 00:00:00 GMT+0200 (Central European Summer Time)",
-        "endDate": "2023-04-20T00:00:00.000Z"
-      }
-    ]
-  }
-]*/
 
 function Filter() {
   const [displayedRooms, setDisplayedRooms] = useState([])
@@ -47,7 +27,7 @@ function Filter() {
   const [allRooms, setAllRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-    //TODO potrebné odchytiť informácie o izbach a a uložit do nejakeho stavu (podobne ako je teraz json hore) najlepsie aby mal json obsahoval tie položky čo su vyssie, lebo potom bude potrebne menit nazbvy premenných dole v renderi
+
   useEffect(() => {
     
     axios.get('https://localhost:7032/api/Room')
@@ -55,7 +35,6 @@ function Filter() {
           console.log(response);
           setAllRooms(response.data);
           filtering()
-          //setLoading(false);
     })
     .catch((err) => {
           
@@ -63,7 +42,6 @@ function Filter() {
   }, [startDate, endDate, value, loading]);
 
   function filtering(){
-    //TODO tu sa použiva ten json tak to nebude on ale tie odchytene vsetky izby
     let tempArray = []
     allRooms.map((room, index) => 
     {
